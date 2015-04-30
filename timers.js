@@ -2,8 +2,38 @@ var timer = document.getElementById("timer");
 var reset = document.getElementById("reset");
 var start = document.getElementById("start");
 var pause = document.getElementById("pause");
-var x = 0;
+var milliseconds = 0;
+var seconds = 0;
+var minutes = 0;
+var hours = 0;
 var clockRunning = false;
+
+var twoDigits = function(time){
+	if(time.toString().length === 1){
+		time = "0" + time;
+	}
+	return time;
+}
+
+var setTimer = function(){
+	timer.innerHTML = "Time elapsed: " + hours + ":" + minutes + ":" + seconds;
+	seconds++;
+	if(seconds == 60){
+		seconds = 0;
+		minutes++;
+	}
+	if(minutes == 60){
+		minutes = 0;
+		hours++;
+	}
+}
+
+var updateTimer = function(){
+	hours = twoDigits(hours);
+	minutes = twoDigits(minutes);
+	seconds = twoDigits(seconds);
+	setTimer();
+}
 
 start.addEventListener("click", function(){
 	if(clockRunning === false){
@@ -15,7 +45,10 @@ start.addEventListener("click", function(){
 	reset.addEventListener("click", function(){
 		clearInterval(newTimer);
 		timer.innerHTML = "Stop Watch";
-		x = 0;
+		hours = 0;
+		minutes = 0;
+		seconds = 0;
+		milliseconds = 0;
 		clockRunning = false;
 	});
 
@@ -25,7 +58,5 @@ start.addEventListener("click", function(){
 	});
 });
 
-var updateTimer = function(){
-	timer.innerHTML = "Time elapsed: " + x;
-	x++;
-}
+
+
